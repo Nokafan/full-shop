@@ -10,9 +10,13 @@ public class WebShopApp {
 
     public static void main(String[] args) {
         ProductService productService = (ProductService) injector.getInstance(ProductService.class);
-        productService.create(new Product("Cup", 25.40));
-        productService.create(new Product("Pencil", 8.25));
-        productService.create(new Product("Table", 12999.99));
+        Product cup = new Product("Cup", 25.40);
+        Product pencil = new Product("Pencil", 8.25);
+        Product table = new Product("Table", 12999.99);
+
+        productService.create(cup);
+        productService.create(pencil);
+        productService.create(table);
 
         for (Product product : productService.getAll()) {
             System.out.println(product);
@@ -28,7 +32,7 @@ public class WebShopApp {
         productService.getAll().forEach(System.out::println);
 
         Product testProduct = new Product("Test Product", 22);
-        testProduct.setId(0L);
+        testProduct.setId(cup.getId());
         productService.update(testProduct);
         System.out.println("\nAfter update by id = 0");
     }
