@@ -9,7 +9,7 @@ public class ShoppingCart {
     private Long userId;
 
     public ShoppingCart(List<Product> products, Long userId) {
-        this.products = new ArrayList<>();
+        products = new ArrayList<>();
         this.userId = userId;
     }
 

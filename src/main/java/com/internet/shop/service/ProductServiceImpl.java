@@ -38,7 +38,8 @@ public class ProductServiceImpl implements ProductService {
         try {
             return productDao.delete(id);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException(" This " + id + " doesn't exist!");
+            throw new RuntimeException(
+                    "Couldn't delete product with id " + id);
         }
     }
 }
