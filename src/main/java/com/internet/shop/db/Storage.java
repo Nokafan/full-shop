@@ -7,13 +7,13 @@ import java.util.List;
 public class Storage {
     public static List<Product> products = new ArrayList<>();
 
-    private static Long userCount = 1L;
+    private static Long userId = 1L;
     private static Long cartId = 1L;
-    private static Long productCount = 1L;
-    private static Long orderCount = 1L;
+    private static Long productId = 1L;
+    private static Long orderId = 1L;
 
     public static void addProduct(Product product) {
-        product.setId(productCount++);
+        product.setId(productId++);
         products.add(product);
     }
 }
