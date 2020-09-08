@@ -1,9 +1,10 @@
-package com.internet.shop.service;
+package com.internet.shop.service.impl;
 
 import com.internet.shop.dao.ProductDao;
 import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Service;
 import com.internet.shop.model.Product;
+import com.internet.shop.service.ProductService;
 import java.util.List;
 
 @Service
@@ -19,8 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product get(Long id) {
-        return productDao.get(id).orElseThrow(() ->
-                new IllegalArgumentException(" This " + id + " doesn't exist!"));
+        return productDao.get(id).get();
     }
 
     @Override
@@ -35,11 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean delete(Long id) {
-        try {
-            return productDao.delete(id);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(
-                    "Couldn't delete product with id " + id);
-        }
+        return productDao.delete(id);
+
     }
 }

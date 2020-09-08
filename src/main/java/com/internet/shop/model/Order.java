@@ -2,6 +2,7 @@ package com.internet.shop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
     private Long id;
@@ -35,5 +36,33 @@ public class Order {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Order order = (Order) obj;
+        return Objects.equals(userId, order.userId)
+                && Objects.equals(userId, order.userId)
+                && Objects.equals(products, order.products);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userId, products);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{"
+                + "id=" + userId
+                + ", userId=" + userId
+                + ", products=" + products
+                + '}';
     }
 }
