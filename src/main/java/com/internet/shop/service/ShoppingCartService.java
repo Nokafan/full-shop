@@ -13,11 +13,11 @@ public interface ShoppingCartService {
 
     ShoppingCart addProduct(ShoppingCart shoppingCart, Product product);
 
-    boolean deleteProduct(ShoppingCart shoppingCart, Product product);
+    ShoppingCart deleteProduct(ShoppingCart shoppingCart, Product product);
 
     ShoppingCart update(ShoppingCart shoppingCart);
 
-    void clear(ShoppingCart shoppingCart);
+    ShoppingCart clear(ShoppingCart shoppingCart);
 
     boolean delete(Long id);
 }

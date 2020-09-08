@@ -5,6 +5,7 @@ import com.internet.shop.model.ShoppingCart;
 import java.util.List;
 
 public interface OrderService {
+    Order create(Order order);
 
     Order completeOrder(ShoppingCart shoppingCart);
 
