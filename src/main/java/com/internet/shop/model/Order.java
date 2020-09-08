@@ -14,20 +14,20 @@ public class Order {
         products = new ArrayList<>();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getId() {
+        return userId;
+    }
+
+    public void setId(Long id) {
+        this.userId = id;
     }
 
     public List<Product> getProducts() {
@@ -47,20 +47,20 @@ public class Order {
             return false;
         }
         Order order = (Order) obj;
-        return Objects.equals(id, order.id)
+        return Objects.equals(userId, order.userId)
                 && Objects.equals(userId, order.userId)
                 && Objects.equals(products, order.products);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, products);
+        return Objects.hash(userId, userId, products);
     }
 
     @Override
     public String toString() {
         return "Order{"
-                + "id=" + id
+                + "id=" + userId
                 + ", userId=" + userId
                 + ", products=" + products
                 + '}';

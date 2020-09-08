@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ShoppingCart {
-    private Long shoppingCartId;
+    private Long id;
     private List<Product> products;
     private Long userId;
 
@@ -14,12 +14,12 @@ public class ShoppingCart {
         this.userId = userId;
     }
 
-    public Long getShoppingCartId() {
-        return shoppingCartId;
+    public Long getId() {
+        return id;
     }
 
-    public void setShoppingCartId(Long shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Product> getProducts() {
@@ -47,20 +47,20 @@ public class ShoppingCart {
             return false;
         }
         ShoppingCart that = (ShoppingCart) o;
-        return Objects.equals(shoppingCartId, that.shoppingCartId)
+        return Objects.equals(id, that.id)
                 && Objects.equals(products, that.products)
                 && Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(shoppingCartId, products, userId);
+        return Objects.hash(id, products, userId);
     }
 
     @Override
     public String toString() {
         return "ShoppingCart{"
-                + "shoppingCartId=" + shoppingCartId
+                + "shoppingCartId=" + id
                 + ", products=" + products
                 + ", userId=" + userId
                 + '}';

@@ -19,8 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(Long id) {
-        return userDao.get(id).orElseThrow(() ->
-                new IllegalArgumentException(" This " + id + " doesn't exist!"));
+        return userDao.get(id).get();
     }
 
     @Override
@@ -35,11 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean delete(Long id) {
-        try {
-            return userDao.delete(id);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(
-                    "Couldn't delete user with id " + id);
-        }
+        return userDao.delete(id);
     }
 }

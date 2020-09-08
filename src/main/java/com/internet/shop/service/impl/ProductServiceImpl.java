@@ -20,8 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product get(Long id) {
-        return productDao.get(id).orElseThrow(() ->
-                new IllegalArgumentException(" This " + id + " doesn't exist!"));
+        return productDao.get(id).get();
     }
 
     @Override
@@ -36,11 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean delete(Long id) {
-        try {
-            return productDao.delete(id);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(
-                    "Couldn't delete product with id " + id);
-        }
+        return productDao.delete(id);
+
     }
 }

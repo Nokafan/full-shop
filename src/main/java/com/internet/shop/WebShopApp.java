@@ -11,6 +11,7 @@ import com.internet.shop.service.UserService;
 import java.math.BigDecimal;
 
 public class WebShopApp {
+    private static final String LINE_DIVIDER = "=================================================";
     private static Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
@@ -41,7 +42,7 @@ public class WebShopApp {
         productService.update(testProduct);
         System.out.println("\nAfter update by id = 0");
 
-        System.out.println("=================================================");
+        System.out.println(LINE_DIVIDER);
         System.out.println("hw-part-2-user");
         UserService userService = (UserService) injector.getInstance(UserService.class);
 
@@ -54,27 +55,28 @@ public class WebShopApp {
         userService.create(kolya);
 
         System.out.println(userService.get(1L));
-        System.out.println("=================================================");
-        userService.getAll().forEach(System.out::println);
-        System.out.println("=================================================");
 
+        System.out.println(LINE_DIVIDER);
+        userService.getAll().forEach(System.out::println);
+
+        System.out.println(LINE_DIVIDER);
         User updatedUser = new User("Petya", "111", "222");
-        updatedUser.setUserId(1L);
+        updatedUser.setId(1L);
         userService.update(updatedUser);
         userService.delete(3L);
         userService.getAll().forEach(System.out::println);
 
-        System.out.println("=================================================");
+        System.out.println(LINE_DIVIDER);
         System.out.println("hw-part-2-shoppingCart");
 
         ShoppingCartService cartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        ShoppingCart shoppingCart = new ShoppingCart(petya.getUserId());
+        ShoppingCart shoppingCart = new ShoppingCart(petya.getId());
         cartService.create(shoppingCart);
-        System.out.println("id = " + shoppingCart.getShoppingCartId());
+        System.out.println("id = " + shoppingCart.getId());
         cartService.addProduct(shoppingCart, productService.get(1L));
         cartService.addProduct(shoppingCart, productService.get(2L));
-        cartService.getByUserId(1L).getProducts().forEach(System.out::println);
+        cartService.get(1L).getProducts().forEach(System.out::println);
         System.out.println("Delete " + testProduct);
         cartService.deleteProduct(shoppingCart, testProduct);
         shoppingCart.getProducts().forEach(System.out::println);
@@ -82,10 +84,9 @@ public class WebShopApp {
         cartService.clear(shoppingCart);
         System.out.println(shoppingCart + " After clear");
 
-        System.out.println("=================================================");
+        System.out.println(LINE_DIVIDER);
         System.out.println("hw-part-2-order");
-
-        ShoppingCart shoppingCart2 = new ShoppingCart(vasya.getUserId());
+        ShoppingCart shoppingCart2 = new ShoppingCart(vasya.getId());
         cartService.create(shoppingCart2);
         cartService.addProduct(shoppingCart, productService.get(1L));
         cartService.addProduct(shoppingCart2, productService.get(2L));
@@ -96,14 +97,20 @@ public class WebShopApp {
         orderService.completeOrder(shoppingCart);
         orderService.completeOrder(shoppingCart2);
         orderService.getAll().forEach(System.out::println);
+        System.out.println("Get by order id");
+        System.out.println(orderService.get(1L));
+        System.out.println("Delete order id = 2");
+        orderService.delete(2L);
+        System.out.println("Print all after delete");
+        orderService.getAll().forEach(System.out::println);
 
         System.out.println("Shopping cart id = 1");
-        System.out.println(cartService.getByUserId(1L));
+        System.out.println(cartService.get(1L));
         System.out.println("Shopping cart id = 2");
-        System.out.println(cartService.getByUserId(2L));
+        System.out.println(cartService.get(2L));
         System.out.println("Get user orders by id:");
         System.out.println(orderService.getUserOrders(1L));
-        System.out.println("Get orders by user id:");
+        System.out.println("Get orders by removed id:");
         System.out.println(orderService.getUserOrders(2L));
     }
 }

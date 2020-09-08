@@ -3,7 +3,7 @@ package com.internet.shop.model;
 import java.util.Objects;
 
 public class User {
-    private Long userId;
+    private Long id;
     private String name;
     private String login;
     private String password;
@@ -14,12 +14,12 @@ public class User {
         this.password = password;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,7 +55,7 @@ public class User {
             return false;
         }
         User user = (User) obj;
-        return userId.equals(user.userId)
+        return id.equals(user.id)
                 && Objects.equals(name, user.name)
                 && Objects.equals(login, user.login)
                 && Objects.equals(password, user.password);
@@ -63,13 +63,13 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, login, password);
+        return Objects.hash(id, name, login, password);
     }
 
     @Override
     public String toString() {
         return "User{"
-                + "userId=" + userId
+                + "userId=" + id
                 + ", name='" + name + '\''
                 + ", login='" + login + '\''
                 + ", password='" + password + '\''

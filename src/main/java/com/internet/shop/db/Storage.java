@@ -24,7 +24,7 @@ public class Storage {
     }
 
     public static void addUser(User user) {
-        user.setUserId(userId++);
+        user.setId(userId++);
         users.add(user);
     }
 
@@ -34,7 +34,7 @@ public class Storage {
     }
 
     public static void addShoppingCart(ShoppingCart shoppingCart) {
-        shoppingCart.setShoppingCartId(cartId++);
+        shoppingCart.setId(cartId++);
         shoppingCarts.add(shoppingCart);
     }
 }
