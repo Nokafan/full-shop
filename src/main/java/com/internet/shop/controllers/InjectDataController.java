@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RegistrationController extends HttpServlet {
+public class InjectDataController extends HttpServlet {
+    public static final User USER_1 = new User("Vasya", "simplyVasya","123");
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private UserService userService =
             (UserService) injector.getInstance(UserService.class);
@@ -21,26 +22,21 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/users/injectData.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String name = req.getParameter("name");
-        String login = req.getParameter("login");
-        String password = req.getParameter("pwd");
-        String passwordRepeated = req.getParameter("pwd-repeat");
-
-        if (password.equals(passwordRepeated)) {
-            User user = new User(name, login, password);
-            userService.create(user);
-            cartService.create(new ShoppingCart(user.getId()));
-            req.setAttribute("message", "Congratulation " + name + " you are registered!");
-            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+        String check = req.getParameter("check");
+        if (check.equals("true")) {
+            userService.create(USER_1);
+            cartService.create(new ShoppingCart(USER_1.getId()));
+            req.setAttribute("message", "Data injected");
+            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req,resp);
         } else {
-            req.setAttribute("message", "Your password and repeated password are not the same");
-            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req,resp);
+            req.setAttribute("message", "Data wasn't injected");
+            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req,resp);
         }
     }
 }

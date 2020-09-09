@@ -18,6 +18,8 @@
     <br><br>
     <button type="submit">Register</button>
     <br><br>
+    <a href="${pageContext.request.contextPath}/">To main page</a>
+    <br>
 </form>
 </body>
 </html>
