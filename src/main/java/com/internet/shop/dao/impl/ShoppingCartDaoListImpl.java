@@ -41,4 +41,12 @@ public class ShoppingCartDaoListImpl implements ShoppingCartDao {
     public boolean delete(Long id) {
         return Storage.shoppingCarts.removeIf(cart -> cart.getId().equals(id));
     }
+
+    @Override
+    public ShoppingCart getByUserId(Long userId) {
+        return Storage.shoppingCarts.stream()
+                .filter(x -> x.getUserId().equals(userId))
+                .findFirst()
+                .get();
+    }
 }
