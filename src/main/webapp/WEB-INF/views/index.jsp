@@ -4,6 +4,8 @@
     <title></title>
 </head>
 <body>
-<h1>Hello world!!!</h1>
+<h1>Main page</h1>
+<br><br>
+<a>${message}</a>
 </body>
 </html>
