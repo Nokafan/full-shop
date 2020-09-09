@@ -1,6 +1,6 @@
 package com.internet.shop.dao.impl;
 
-import com.internet.shop.dao.ShoppingCartDao;
+import com.internet.shop.dao.interfaces.ShoppingCartDao;
 import com.internet.shop.db.Storage;
 import com.internet.shop.lib.Dao;
 import com.internet.shop.model.ShoppingCart;
@@ -40,5 +40,13 @@ public class ShoppingCartDaoListImpl implements ShoppingCartDao {
     @Override
     public boolean delete(Long id) {
         return Storage.shoppingCarts.removeIf(cart -> cart.getId().equals(id));
+    }
+
+    @Override
+    public ShoppingCart getByUserId(Long userId) {
+        return Storage.shoppingCarts.stream()
+                .filter(s -> s.getUserId().equals(userId))
+                .findFirst()
+                .get();
     }
 }

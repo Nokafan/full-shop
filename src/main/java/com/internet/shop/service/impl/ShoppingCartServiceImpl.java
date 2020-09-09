@@ -1,11 +1,11 @@
 package com.internet.shop.service.impl;
 
-import com.internet.shop.dao.ShoppingCartDao;
+import com.internet.shop.dao.interfaces.ShoppingCartDao;
 import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Service;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
-import com.internet.shop.service.ShoppingCartService;
+import com.internet.shop.service.interfaces.ShoppingCartService;
 import java.util.List;
 
 @Service
@@ -49,6 +49,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart clear(ShoppingCart shoppingCart) {
         shoppingCart.getProducts().clear();
         return cartDao.update(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart getByUserId(Long id) {
+        return cartDao.getByUserId(id);
     }
 
     @Override
