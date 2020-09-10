@@ -6,7 +6,7 @@
 <body>
 <h1>Data to inject</h1>
 <br><br>
-<form method="post" action="${pageContext.request.contextPath}/injectData">
+<form method="post" action="${pageContext.request.contextPath}/inject">
     Data: <input type="radio" name="check" value="true" checked/>Add
     <input type="radio" name="check" value="false"/>Do not add
     <br><br>
