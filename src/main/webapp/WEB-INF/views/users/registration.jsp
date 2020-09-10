@@ -8,13 +8,13 @@
 <h1>please add information</h1>
 <h2 style="color: red">${message}</h2>
 <form method="post" action="${pageContext.request.contextPath}/registration">
-    Name: <input type="text" name="name">
+    Name: <input type="text" name="name" required>
     <br><br>
-    Login: <input type="text" name="login">
+    Login: <input type="text" name="login" required>
     <br><br>
-    Password: <input type="password" name="pwd">
+    Password: <input type="password" name="pwd" required>
     <br><br>
-    Repeat password: <input type="password" name="pwd-repeat">
+    Repeat password: <input type="password" name="pwd-repeat" required>
     <br><br>
     <button type="submit">Register</button>
     <br><br>

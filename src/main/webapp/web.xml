@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>com.internet.shop.controllers.IndexController</servlet-class>
@@ -16,7 +17,7 @@
 
     <servlet>
         <servlet-name>allUsers</servlet-name>
-        <servlet-class>com.internet.shop.controllers.UserController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.GetAllUsersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -26,7 +27,7 @@
 
     <servlet>
         <servlet-name>registration</servlet-name>
-        <servlet-class>com.internet.shop.controllers.RegistrationController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.RegistrationUsersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -66,7 +67,7 @@
 
     <servlet>
         <servlet-name>allProducts</servlet-name>
-        <servlet-class>com.internet.shop.controllers.ProductController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.GetAllProductsController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -86,23 +87,12 @@
 
     <servlet>
         <servlet-name>putOrder</servlet-name>
-        <servlet-class>com.internet.shop.controllers.ShoppingCartController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.GetAllAtShoppingCartController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>putOrder</servlet-name>
         <url-pattern>/cart</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>deleteFromCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.DeleteProductFromCartController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>deleteFromCart</servlet-name>
-        <url-pattern>/delete/cart</url-pattern>
     </servlet-mapping>
 
 </web-app>
