@@ -35,6 +35,6 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/">To main page</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/cart">Cart</a>
+<a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
 </body>
 </html>

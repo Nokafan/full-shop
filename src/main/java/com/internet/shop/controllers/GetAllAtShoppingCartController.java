@@ -18,6 +18,6 @@ public class GetAllAtShoppingCartController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("products", cartService.get(USER_ID).getProducts());
-        req.getRequestDispatcher("/WEB-INF/views/cart/cart.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/carts/cart.jsp").forward(req, resp);
     }
 }

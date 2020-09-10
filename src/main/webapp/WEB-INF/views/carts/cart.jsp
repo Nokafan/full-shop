@@ -7,6 +7,7 @@
 <body>
 <h1>My cart</h1>
 <br><br>
+<%--<form method="post" action="${pageContext.request.contextPath}/"--%>
 <table border="1">
     <tr>
         <th>ID</th>

@@ -92,7 +92,17 @@
 
     <servlet-mapping>
         <servlet-name>cartController</servlet-name>
-        <url-pattern>/cart</url-pattern>
+        <url-pattern>/carts/cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>productFromCartRemover</servlet-name>
+        <servlet-class>com.internet.shop.controllers.DeleteProductFromCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>productFromCartRemover</servlet-name>
+        <url-pattern>/cart/delete</url-pattern>
     </servlet-mapping>
 
 </web-app>
