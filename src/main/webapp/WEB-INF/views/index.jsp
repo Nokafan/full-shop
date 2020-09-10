@@ -17,7 +17,7 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/products/all">To all products</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/cart/all">Cart</a>
+<a href="${pageContext.request.contextPath}/cart">Cart</a>
 <br><br>
 </body>
 </html>
