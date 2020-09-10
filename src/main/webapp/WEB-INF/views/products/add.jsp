@@ -3,7 +3,7 @@
 </head>
 <body>
 <h1>Add product</h1>
-<h1>please add information</h1>
+<h1>Please add information</h1>
 <h2 style="color: blue">${message}</h2>
 <form method="post" action="${pageContext.request.contextPath}/products/add">
     Name: <input type="text" name="name" required>

@@ -2,11 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>My cart</title>
+    <title>All products</title>
 </head>
 <body>
-<h1>My cart</h1>
-<br>
+<h1>All products</h1>
+
 <br>
 <table border="1">
     <tr>
@@ -28,16 +28,9 @@
         </tr>
     </c:forEach>
 </table>
-<br>
-
-<form method="post" action="${pageContext.request.contextPath}/order/create">
-    <button type="submit">Place order</button>
-</form>
-<br>
-<a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
-<br>
+<br><br>
 <a href="${pageContext.request.contextPath}/">To main page</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/products/all">All products</a>
+<a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
 </body>
 </html>

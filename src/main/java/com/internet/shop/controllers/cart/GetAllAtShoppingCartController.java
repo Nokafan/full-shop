@@ -1,4 +1,4 @@
-package com.internet.shop.controllers;
+package com.internet.shop.controllers.cart;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.service.interfaces.ShoppingCartService;
@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetAllAtShoppingCartController extends HttpServlet {
     private static final Long USER_ID = 1L;
-    private static final Injector injector = Injector.getInstance("com.internet.shop");
+    private static final Injector injector =
+            Injector.getInstance("com.internet.shop");
     private ShoppingCartService cartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 

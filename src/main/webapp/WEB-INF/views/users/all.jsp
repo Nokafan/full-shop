@@ -6,8 +6,6 @@
 </head>
 <body>
 <h1>All users</h1>
-<a href="${pageContext.request.contextPath}/">To main page</a>
-<br><br>
 <table border="1">
     <tr>
         <th>ID</th>
@@ -32,5 +30,10 @@
         </tr>
     </c:forEach>
 </table>
+<br>
+<a href="${pageContext.request.contextPath}/">To main page</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/users/registration">To register</a>
+<br><br>
 </body>
 </html>

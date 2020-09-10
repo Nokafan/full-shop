@@ -2,33 +2,32 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All products</title>
+    <title>ALl your orders</title>
 </head>
 <body>
-<h1>All products</h1>
-
+<h1>All your orders</h1>
 <br>
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Buy</th>
+        <th>User ID</th>
+        <th>Details</th>
+        <th>Action</th>
     </tr>
-    <c:forEach var="order" items="${products}">
+    <c:forEach var="order" items="${orders}">
         <tr>
             <td>
                 <c:out value="${order.id}"/>
             </td>
             <td>
-                <c:out value="${order.name}"/>
+                <c:out value="${order.userId}"/>
             </td>
             <td>
-                <c:out value="${order.price}"/>
+                <a href="${pageContext.request.contextPath}/order/detail?id=${order.id}">Details</a>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/products/buy?id=${order.id}">
-                    <button>Buy</button>
+                <a href="${pageContext.request.contextPath}/order/remove?id=${order.id}">
+                    <button>Remove</button>
                 </a>
             </td>
         </tr>
@@ -37,6 +36,5 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/">To main page</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
 </body>
 </html>
