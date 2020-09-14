@@ -21,6 +21,6 @@ public class PreviewOrderController extends HttpServlet {
             throws ServletException, IOException {
         List<Product> cartProduct = cartService.getByUserId(USER_ID).getProducts();
         req.setAttribute("products", cartProduct);
-        req.getRequestDispatcher("/WEB-INF/views/orders/confirm.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/orders/confirm.jsp").forward(req, resp);
     }
 }
