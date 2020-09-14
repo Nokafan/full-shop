@@ -5,19 +5,28 @@
 </head>
 <body>
 <h1>Main page</h1>
-<br><br>
+<br>
 <h2 style="color: blue">${message}</h2>
-<a href="${pageContext.request.contextPath}/inject">To inject data page</a>
+<a href="${pageContext.request.contextPath}/inject">Inject data page</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/registration">To register</a>
+<a href="${pageContext.request.contextPath}/users/registration">Add new user</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/users/all">To all users</a>
+<a href="${pageContext.request.contextPath}/users/all">All users</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/products/add">To add products</a>
+<a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/products/all">To all products</a>
+<a href="${pageContext.request.contextPath}/orders/all">All orders</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/cart">Cart</a>
+<a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
+<br><br>
+<hr>
+<a href="${pageContext.request.contextPath}/products/add">Add new products</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/products/edit">Products edit section</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/orders/edit">Orders edit section</a>
 <br><br>
 </body>
 </html>
