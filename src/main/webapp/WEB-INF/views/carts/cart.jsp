@@ -34,8 +34,8 @@
     <button type="submit">Place order</button>
 </form>
 <br>
-<a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
-<br>
+<a href="${pageContext.request.contextPath}/carts/edit"><button>Carts edit section</button></a>
+<br><br>
 <a href="${pageContext.request.contextPath}/">To main page</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
