@@ -13,16 +13,16 @@
         <th>User ID</th>
         <th>Details</th>
     </tr>
-    <c:forEach var="order" items="${orders}">
+    <c:forEach var="product" items="${orders}">
         <tr>
             <td>
-                <c:out value="${order.id}"/>
+                <c:out value="${product.id}"/>
             </td>
             <td>
-                <c:out value="${order.userId}"/>
+                <c:out value="${product.userId}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/order/detail?id=${order.id}">Details</a>
+                <a href="${pageContext.request.contextPath}/order/detail?id=${product.id}">Details</a>
             </td>
         </tr>
     </c:forEach>

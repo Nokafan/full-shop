@@ -8,24 +8,24 @@
 <h1>My order created</h1>
 
 <table border="1">
-<tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Price</th>
-</tr>
-<c:forEach var="order" items="${order}">
     <tr>
-        <td>
-            <c:out value="${order.id}"/>
-        </td>
-        <td>
-            <c:out value="${order.name}"/>
-        </td>
-        <td>
-            <c:out value="${order.price}"/>
-        </td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
     </tr>
-</c:forEach>
+    <c:forEach var="product" items="${products}">
+        <tr>
+            <td>
+                <c:out value="${product.id}"/>
+            </td>
+            <td>
+                <c:out value="${product.name}"/>
+            </td>
+            <td>
+                <c:out value="${product.price}"/>
+            </td>
+        </tr>
+    </c:forEach>
 </table>
 <h1>To approve order press confirm</h1>
 <a href="${pageContext.request.contextPath}/order/confirm"><button>Confirm order</button></a>

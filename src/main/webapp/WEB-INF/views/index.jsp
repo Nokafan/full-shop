@@ -13,8 +13,6 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/users/all">All users</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/products/add">Add new products</a>
-<br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/all">All orders</a>
@@ -22,6 +20,10 @@
 <a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
 <br><br>
 <hr>
+<a href="${pageContext.request.contextPath}/products/add">Add new products</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/products/edit">Products edit section</a>
+<br><br>
 <a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/edit">Orders edit section</a>

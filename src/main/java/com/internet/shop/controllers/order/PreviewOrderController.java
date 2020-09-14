@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AddOrderController extends HttpServlet {
-    public static final Long CART_ID = 1L;
+public class PreviewOrderController extends HttpServlet {
+    public static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private OrderService orderService =
             (OrderService) injector.getInstance(OrderService.class);
@@ -22,8 +22,8 @@ public class AddOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Product> cartProduct = cartService.get(CART_ID).getProducts();
-        req.setAttribute("order",cartProduct);
+        List<Product> cartProduct = cartService.getByUserId(USER_ID).getProducts();
+        req.setAttribute("products",cartProduct);
         req.getRequestDispatcher("/WEB-INF/views/orders/confirm.jsp").forward(req,resp);
     }
 }

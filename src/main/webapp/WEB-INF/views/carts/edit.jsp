@@ -15,19 +15,19 @@
         <th>Price</th>
         <th>Delete</th>
     </tr>
-    <c:forEach var="order" items="${products}">
+    <c:forEach var="product" items="${products}">
         <tr>
             <td>
-                <c:out value="${order.id}"/>
+                <c:out value="${product.id}"/>
             </td>
             <td>
-                <c:out value="${order.name}"/>
+                <c:out value="${product.name}"/>
             </td>
             <td>
-                <c:out value="${order.price}"/>
+                <c:out value="${product.price}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/cart/delete?id=${order.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/cart/delete?id=${product.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
