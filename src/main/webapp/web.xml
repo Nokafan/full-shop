@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>orderAdminController</servlet-name>
-        <servlet-class>com.internet.shop.controllers.order.GetAllOrdersOfUserAdminController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.order.GetAllOrdersAdminController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -87,7 +87,7 @@
 
     <servlet>
         <servlet-name>orderController</servlet-name>
-        <servlet-class>com.internet.shop.controllers.order.GetAllOrdersOfUserController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.order.GetAllUserOrdersController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -117,7 +117,7 @@
 
     <servlet>
         <servlet-name>orderQualifier</servlet-name>
-        <servlet-class>com.internet.shop.controllers.product.user.GettAllProductsOfOrderController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.product.user.GetOrderDetailsController</servlet-class>
     </servlet>
 
     <servlet-mapping>

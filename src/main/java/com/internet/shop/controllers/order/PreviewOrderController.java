@@ -2,7 +2,6 @@ package com.internet.shop.controllers.order;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
-import com.internet.shop.service.interfaces.OrderService;
 import com.internet.shop.service.interfaces.ShoppingCartService;
 import java.io.IOException;
 import java.util.List;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 public class PreviewOrderController extends HttpServlet {
     public static final Long USER_ID = 1L;
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    private OrderService orderService =
-            (OrderService) injector.getInstance(OrderService.class);
     private ShoppingCartService cartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
