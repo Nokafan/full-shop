@@ -43,10 +43,10 @@ public class InjectDataController extends HttpServlet {
             productService.create(PRODUCT_2);
             productService.create(PRODUCT_3);
             req.setAttribute("message", "Data injected");
-            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         } else {
             req.setAttribute("message", "Data wasn't injected");
-            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         }
     }
 }

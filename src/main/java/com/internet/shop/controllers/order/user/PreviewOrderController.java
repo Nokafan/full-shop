@@ -1,4 +1,4 @@
-package com.internet.shop.controllers.order;
+package com.internet.shop.controllers.order.user;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
@@ -20,7 +20,7 @@ public class PreviewOrderController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<Product> cartProduct = cartService.getByUserId(USER_ID).getProducts();
-        req.setAttribute("products",cartProduct);
-        req.getRequestDispatcher("/WEB-INF/views/orders/confirm.jsp").forward(req,resp);
+        req.setAttribute("products", cartProduct);
+        req.getRequestDispatcher("/WEB-INF/views/orders/confirm.jsp").forward(req, resp);
     }
 }

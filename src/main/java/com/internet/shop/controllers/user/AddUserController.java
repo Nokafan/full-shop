@@ -37,10 +37,10 @@ public class AddUserController extends HttpServlet {
             userService.create(user);
             cartService.create(new ShoppingCart(user.getId()));
             req.setAttribute("message", "Congratulation " + name + " you are registered!");
-            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
         } else {
             req.setAttribute("message", "Your password and repeated password are not the same");
-            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
         }
     }
 }

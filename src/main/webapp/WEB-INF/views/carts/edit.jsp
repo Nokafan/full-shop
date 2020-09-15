@@ -5,7 +5,7 @@
     <title>My cart admin</title>
 </head>
 <body>
-<h1>My cart edit mode</h1>
+<h1>My cart admin mode</h1>
 <br>
 <br>
 <table border="1">
@@ -27,7 +27,8 @@
                 <c:out value="${product.price}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/cart/delete?id=${product.id}">Delete</a>
+                <a href="${pageContext.request.contextPath}/admin/cart/remove?id=${product.id}">
+                    <button>Delete</button></a>
             </td>
         </tr>
     </c:forEach>

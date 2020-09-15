@@ -1,4 +1,4 @@
-package com.internet.shop.controllers.order;
+package com.internet.shop.controllers.order.admin;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.service.interfaces.OrderService;
