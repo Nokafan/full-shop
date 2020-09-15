@@ -37,7 +37,7 @@
 
     <servlet>
         <servlet-name>cartUserAdminController</servlet-name>
-        <servlet-class>com.internet.shop.controllers.cart.admin.GetUserShoppingCartAdminController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.cart.admin.GetUsersShoppingCartsAdminController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -215,6 +215,37 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>com.internet.shop.controllers.user.LogoutController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cartClearAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.cart.admin.ClearCartAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cartClearAdmin</servlet-name>
+        <url-pattern>/admin/cart/clear</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cartDetailsAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.cart.admin.GetCartDetailsAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>cartDetailsAdmin</servlet-name>
+        <url-pattern>/admin/cart/detail</url-pattern>
+    </servlet-mapping>
+
+
     <filter>
         <filter-name>authenticationFilter</filter-name>
         <filter-class>com.internet.shop.web.filters.AuthenticationFilter</filter-class>
@@ -224,5 +255,7 @@
         <filter-name>authenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
 
 </web-app>

@@ -9,13 +9,13 @@
 <h2 style="color: blue">${message}</h2>
 <a href="${pageContext.request.contextPath}/inject">Inject data page</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/users/registration">Add new user</a>
-<br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/orders/all">All orders</a>
+<a href="${pageContext.request.contextPath}/orders/all">All user orders</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/carts/cart">Cart</a>
+<a href="${pageContext.request.contextPath}/carts/cart">User cart</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
 <br><br>
 <hr>
 <a href="${pageContext.request.contextPath}/users/all">All users</a>
