@@ -22,6 +22,6 @@ public class ConfirmOrderController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = (Long) req.getSession().getAttribute(LoginUserController.USER_ID);
         orderService.completeOrder(cartService.getByUserId(userId));
-        req.getRequestDispatcher("/WEB-INF/views/orders/confirmed.jsp").forward(req,resp);
+        req.getRequestDispatcher("/WEB-INF/views/orders/confirmed.jsp").forward(req, resp);
     }
 }

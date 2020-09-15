@@ -15,8 +15,6 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/carts/cart">User cart</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
-<br><br>
 <hr>
 <a href="${pageContext.request.contextPath}/users/all">All users</a>
 <br><br>
