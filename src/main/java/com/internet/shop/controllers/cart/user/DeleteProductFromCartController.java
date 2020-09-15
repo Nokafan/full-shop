@@ -1,4 +1,4 @@
-package com.internet.shop.controllers.cart.admin;
+package com.internet.shop.controllers.cart.user;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.service.interfaces.ProductService;
@@ -22,6 +22,6 @@ public class DeleteProductFromCartController extends HttpServlet {
             throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
         cartService.deleteProduct(cartService.getByUserId(USER_ID), productService.get(id));
-        resp.sendRedirect(req.getContextPath() + "/carts/edit");
+        resp.sendRedirect(req.getContextPath() + "/carts/cart");
     }
 }

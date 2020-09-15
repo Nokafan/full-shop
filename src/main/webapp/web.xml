@@ -17,12 +17,22 @@
 
     <servlet>
         <servlet-name>productFromCartRemover</servlet-name>
-        <servlet-class>com.internet.shop.controllers.cart.admin.DeleteProductFromCartController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.cart.admin.DeleteProductFromCartAdminController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>productFromCartRemover</servlet-name>
-        <url-pattern>/cart/delete</url-pattern>
+        <url-pattern>/admin/cart/remove</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>productFromCartUserRemover</servlet-name>
+        <servlet-class>com.internet.shop.controllers.cart.user.DeleteProductFromCartController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>productFromCartUserRemover</servlet-name>
+        <url-pattern>/user/cart/remove</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -187,7 +197,7 @@
 
     <servlet>
         <servlet-name>productsDeleteController</servlet-name>
-        <servlet-class>com.internet.shop.controllers.product.admin.DeleteProductController</servlet-class>
+        <servlet-class>com.internet.shop.controllers.product.admin.DeleteProductAdminController</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -206,12 +216,12 @@
     </servlet-mapping>
 
     <filter>
-        <filter-name>AuthenticationFilter</filter-name>
+        <filter-name>authenticationFilter</filter-name>
         <filter-class>com.internet.shop.web.filters.AuthenticationFilter</filter-class>
     </filter>
 
     <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
+        <filter-name>authenticationFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
