@@ -11,10 +11,14 @@
     Password: <input type="password" name="password" required>
     <button type="submit">Login</button>
 </form>
-    <br><br>
-    <a href="${pageContext.request.contextPath}/">To main page</a>
-    <br><br>
-    <a href="${pageContext.request.contextPath}/registration">To registration page</a>
-    <br>
+<br><br>
+<a href="${pageContext.request.contextPath}/">To main page</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/registration">To registration page</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/products/all">All products</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/inject">Inject data page</a>
+<br><br>
 </body>
 </html>

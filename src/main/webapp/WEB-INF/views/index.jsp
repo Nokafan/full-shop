@@ -7,8 +7,6 @@
 <h1>Main page</h1>
 <br>
 <h2 style="color: blue">${message}</h2>
-<a href="${pageContext.request.contextPath}/inject">Inject data page</a>
-<br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/all">All user orders</a>

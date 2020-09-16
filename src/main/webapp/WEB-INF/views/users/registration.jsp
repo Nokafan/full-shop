@@ -18,10 +18,12 @@
     <br><br>
     <button type="submit">Register</button>
 </form>
-    <br><br>
-    <a href="${pageContext.request.contextPath}/">To main page</a>
-    <br><br>
-    <a href="${pageContext.request.contextPath}/login">To login page</a>
-    <br>
+<br><br>
+<a href="${pageContext.request.contextPath}/">To main page</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/login">To login page</a>
+<br><br>
+<a href="${pageContext.request.contextPath}/products/all">All products</a>
+<br><br>
 </body>
 </html>
