@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class AuthorizationFilter implements Filter {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
-    UserService userService = (UserService) injector.getInstance(UserService.class);
+    private UserService userService = (UserService) injector.getInstance(UserService.class);
 
     private Map<String, Set<Role.RoleName>> protectedUrls = new HashMap<>();
 
@@ -37,6 +37,11 @@ public class AuthorizationFilter implements Filter {
         protectedUrls.put("/products/remove", Set.of(Role.RoleName.ADMIN));
         protectedUrls.put("/admin/cart/clear", Set.of(Role.RoleName.ADMIN));
         protectedUrls.put("/admin/cart/detail", Set.of(Role.RoleName.ADMIN));
+        protectedUrls.put("/carts/cart", Set.of(Role.RoleName.USER));
+        protectedUrls.put("/products/buy", Set.of(Role.RoleName.USER));
+        protectedUrls.put("/orders/all", Set.of(Role.RoleName.USER));
+        protectedUrls.put("/user/cart/remove", Set.of(Role.RoleName.USER));
+        protectedUrls.put("/order/create", Set.of(Role.RoleName.USER));
         protectedUrls.put("/order/confirm", Set.of(Role.RoleName.USER));
     }
 

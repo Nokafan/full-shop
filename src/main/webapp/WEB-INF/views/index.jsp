@@ -7,6 +7,10 @@
 <h1>Main page</h1>
 <br>
 <h2 style="color: blue">${message}</h2>
+<a href="${pageContext.request.contextPath}/login"><button>Login</button></a>
+<br><br>
+<a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
+<br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/all">All user orders</a>
@@ -23,8 +27,6 @@
 <a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/edit">Orders edit section</a>
-<br><br>
-<a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
 <br><br>
 </body>
 </html>

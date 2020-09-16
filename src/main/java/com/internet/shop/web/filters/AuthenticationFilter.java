@@ -21,6 +21,7 @@ public class AuthenticationFilter implements Filter {
         accessibleUrls.add("/login");
         accessibleUrls.add("/registration");
         accessibleUrls.add("/products/all");
+        accessibleUrls.add("/users/inject");
     }
 
     @Override
@@ -47,6 +48,6 @@ public class AuthenticationFilter implements Filter {
 
     private boolean isAccessesible(String urlString) {
         return accessibleUrls.stream()
-                .anyMatch(url -> url.equals(urlString));
+                .anyMatch(url -> url.contains(urlString));
     }
 }
