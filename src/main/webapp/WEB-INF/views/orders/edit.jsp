@@ -14,19 +14,19 @@
         <th>Details</th>
         <th>Action</th>
     </tr>
-    <c:forEach var="product" items="${orders}">
+    <c:forEach var="products" items="${orders}">
         <tr>
             <td>
-                <c:out value="${product.id}"/>
+                <c:out value="${products.id}"/>
             </td>
             <td>
-                <c:out value="${product.userId}"/>
+                <c:out value="${products.userId}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/order/detail?id=${product.id}">Details</a>
+                <a href="${pageContext.request.contextPath}/order/detail?id=${products.id}">Details</a>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/order/remove?id=${product.id}">
+                <a href="${pageContext.request.contextPath}/order/remove?id=${products.id}">
                     <button>Remove</button>
                 </a>
             </td>

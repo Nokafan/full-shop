@@ -2,33 +2,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>My cart admin</title>
+    <title>Carts admin</title>
 </head>
 <body>
-<h1>My cart admin mode</h1>
+<h1>Carts admin mode</h1>
 <br>
 <br>
 <table border="1">
     <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
+        <th>Cart ID</th>
+        <th>User ID</th>
+        <th>Detail</th>
         <th>Delete</th>
     </tr>
-    <c:forEach var="product" items="${products}">
+    <c:forEach var="cart" items="${carts}">
         <tr>
             <td>
-                <c:out value="${product.id}"/>
+                <c:out value="${cart.id}"/>
             </td>
             <td>
-                <c:out value="${product.name}"/>
+                <c:out value="${cart.userId}"/>
             </td>
             <td>
-                <c:out value="${product.price}"/>
+                <a href="${pageContext.request.contextPath}/admin/cart/detail?id=${cart.id}">
+                    <button>Details</button></a>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/admin/cart/remove?id=${product.id}">
-                    <button>Delete</button></a>
+                <a href="${pageContext.request.contextPath}/admin/cart/clear?id=${cart.id}">
+                    <button>Clear</button></a>
             </td>
         </tr>
     </c:forEach>
