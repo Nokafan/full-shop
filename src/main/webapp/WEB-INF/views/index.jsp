@@ -26,5 +26,7 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/orders/edit">Orders edit section</a>
 <br><br>
+<a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
+<br><br>
 </body>
 </html>
