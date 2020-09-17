@@ -36,9 +36,6 @@
 </table>
 <br>
 
-<form method="post" action="${pageContext.request.contextPath}/order/create">
-    <button type="submit">Place order</button>
-</form>
 <a href="${pageContext.request.contextPath}/products/add"><button>To create new product</button></a>
 <br>
 <br>

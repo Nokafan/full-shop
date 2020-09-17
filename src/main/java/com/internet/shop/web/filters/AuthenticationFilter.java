@@ -1,6 +1,9 @@
 package com.internet.shop.web.filters;
 
+import com.internet.shop.controllers.user.LoginController;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -11,10 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AuthenticationFilter implements Filter {
-    private static final String USER_ID = "user_id";
+    private Set<String> accessibleUrls = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        accessibleUrls.add("/login");
+        accessibleUrls.add("/registration");
+        accessibleUrls.add("/products/all");
+        accessibleUrls.add("/users/inject");
     }
 
     @Override
@@ -23,11 +30,11 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String url = req.getServletPath();
-        if (url.equals("/login") || url.equals("/registration")) {
+        if (isAccessesible(url)) {
             chain.doFilter(req, resp);
             return;
         }
-        Long userId = (Long) req.getSession().getAttribute(USER_ID);
+        Long userId = (Long) req.getSession().getAttribute(LoginController.USER_ID);
         if (userId == null) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
@@ -37,5 +44,10 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void destroy() {
+    }
+
+    private boolean isAccessesible(String urlString) {
+        return accessibleUrls.stream()
+                .anyMatch(url -> url.contains(urlString));
     }
 }

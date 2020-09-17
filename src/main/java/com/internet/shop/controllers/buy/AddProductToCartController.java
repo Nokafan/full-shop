@@ -1,6 +1,6 @@
 package com.internet.shop.controllers.buy;
 
-import com.internet.shop.controllers.user.LoginUserController;
+import com.internet.shop.controllers.user.LoginController;
 import com.internet.shop.lib.Injector;
 import com.internet.shop.service.interfaces.ProductService;
 import com.internet.shop.service.interfaces.ShoppingCartService;
@@ -21,7 +21,7 @@ public class AddProductToCartController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long productId = Long.valueOf(req.getParameter("id"));
-        Long userId = (Long) req.getSession().getAttribute(LoginUserController.USER_ID);
+        Long userId = (Long) req.getSession().getAttribute(LoginController.USER_ID);
         cartService.addProduct(cartService.getByUserId(userId),
                 productService.get(productId));
         resp.sendRedirect(req.getContextPath() + "/products/all");
