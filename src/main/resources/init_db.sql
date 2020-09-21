@@ -6,4 +6,4 @@ CREATE TABLE `products` (
                             `product_price` decimal(13,2) NOT NULL,
                             `product_deleted` tinyint(1) NOT NULL DEFAULT '0',
                             PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+)

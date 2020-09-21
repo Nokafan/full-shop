@@ -1,34 +1,35 @@
 package com.internet.shop;
 
-import com.internet.shop.dao.jdbc.ProductDaoJdbcImpl;
+import com.internet.shop.dao.interfaces.ProductDao;
+import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
 
 public class Main {
+    private static Injector injector = Injector.getInstance("com.internet.shop");
 
     public static void main(String[] args) {
-        ProductDaoJdbcImpl productDaoJdbc = new ProductDaoJdbcImpl();
+        ProductDao productDao = (ProductDao) injector.getInstance(ProductDao.class);
         Product cup = new Product("Cup", 25.40);
         Product pencil = new Product("Pencil", 8.25);
         Product table = new Product("Table", 12999.99);
-        productDaoJdbc.create(cup);
-        productDaoJdbc.create(pencil);
-        productDaoJdbc.create(table);
+        productDao.create(cup);
+        productDao.create(pencil);
+        productDao.create(table);
 
         System.out.println(cup.getId());
-        productDaoJdbc.getAll().forEach(System.out::println);
+        productDao.getAll().forEach(System.out::println);
 
-        System.out.println(productDaoJdbc.get(1L));
-        Product test = productDaoJdbc.get(1L).get();
+        System.out.println(productDao.get(11L));
+        Product test = productDao.get(11L).get();
         test.setName("Cupuchin");
-        productDaoJdbc.update(test);
-        productDaoJdbc.delete(1L);
-        productDaoJdbc.delete(2L);
-        productDaoJdbc.delete(3L);
-        productDaoJdbc.delete(4L);
-        productDaoJdbc.delete(5L);
-        productDaoJdbc.delete(6L);
-        productDaoJdbc.delete(7L);
-        productDaoJdbc.delete(34L);
-        productDaoJdbc.getAll().forEach(System.out::println);
+        productDao.update(test);
+        productDao.delete(1L);
+        productDao.delete(2L);
+        productDao.delete(3L);
+        productDao.delete(4L);
+        productDao.delete(5L);
+        productDao.delete(6L);
+        productDao.delete(7L);
+        productDao.getAll().forEach(System.out::println);
     }
 }

@@ -38,7 +38,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public Optional<Product> get(Long id) {
-        String query = "SELECT * from products where product_id = ?;";
+        String query = "SELECT * FROM products WHERE product_id = ? AND product_deleted = FALSE;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
@@ -46,10 +46,10 @@ public class ProductDaoJdbcImpl implements ProductDao {
             if (resultSet.next()) {
                 return Optional.of(getProduct(resultSet));
             }
+            return Optional.empty();
         } catch (SQLException e) {
             throw new DataProcessingException("Product with id = " + id + " not found.", e);
         }
-        return Optional.empty();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product update(Product product) {
         String query = "UPDATE products SET product_name = ?, product_price = ? "
-                + " WHERE product_id = ?";
+                + "WHERE product_id = ? AND product_deleted = FALSE";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, product.getName());
@@ -87,7 +87,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "UPDATE products SET product_deleted = '1' WHERE (product_id = ?)";
+        String query = "UPDATE products SET product_deleted = TRUE WHERE product_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
