@@ -9,9 +9,23 @@ public class Order {
     private Long userId;
     private List<Product> products;
 
+    public Order() {
+    }
+
     public Order(Long userId) {
         this.userId = userId;
         products = new ArrayList<>();
+    }
+
+    public Order(Long id, Long userId) {
+        this.id = id;
+        this.userId = userId;
+    }
+
+    public Order(Long id, Long userId, List<Product> products) {
+        this.id = id;
+        this.userId = userId;
+        this.products = products;
     }
 
     public Long getId() {
@@ -60,7 +74,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{"
-                + "id=" + userId
+                + "id=" + id
                 + ", userId=" + userId
                 + ", products=" + products
                 + '}';

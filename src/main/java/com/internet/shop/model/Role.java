@@ -4,6 +4,11 @@ public class Role {
     private Long id;
     private RoleName roleName;
 
+    public Role(Long id, RoleName roleName) {
+        this.id = id;
+        this.roleName = roleName;
+    }
+
     private Role(RoleName roleName) {
         this.roleName = roleName;
     }

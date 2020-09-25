@@ -11,7 +11,7 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>
 <br><br>
-<a href="${pageContext.request.contextPath}/inject">Inject data page</a>
+<a href="${pageContext.request.contextPath}/registration">To registration page</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>

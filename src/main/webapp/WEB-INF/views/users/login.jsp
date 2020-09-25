@@ -18,7 +18,5 @@
 <br><br>
 <a href="${pageContext.request.contextPath}/products/all">All products</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/inject">Inject data page</a>
-<br><br>
 </body>
 </html>

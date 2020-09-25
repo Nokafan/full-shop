@@ -2,14 +2,12 @@ package com.internet.shop.dao.impl;
 
 import com.internet.shop.dao.interfaces.OrderDao;
 import com.internet.shop.db.Storage;
-import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Order;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Dao
 public class OrderDaoListImpl implements OrderDao {
 
     @Override
@@ -41,7 +39,7 @@ public class OrderDaoListImpl implements OrderDao {
     public Order update(Order order) {
         IntStream.range(0, Storage.orders.size())
                 .filter(i -> Storage.orders.get(i).getId().equals(order.getId()))
-                .forEach(i -> Storage.orders.set(i,order));
+                .forEach(i -> Storage.orders.set(i, order));
         return order;
     }
 
