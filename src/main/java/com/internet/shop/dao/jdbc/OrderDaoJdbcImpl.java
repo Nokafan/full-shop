@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Dao
 public class OrderDaoJdbcImpl implements OrderDao {
-
     @Override
     public List<Order> getUserOrders(Long id) {
         String query = "SELECT * FROM orders WHERE user_id = ? AND order_deleted = FALSE;";
@@ -26,10 +25,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        ordersList.add(getOrderFromResultSet(resultSet));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    ordersList.add(getOrderFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -49,10 +47,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
                          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setLong(1, order.getUserId());
                 preparedStatement.executeUpdate();
-                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                    if (resultSet.next()) {
-                        order.setId(resultSet.getLong(1));
-                    }
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    order.setId(resultSet.getLong(1));
                 }
             }
         } catch (SQLException e) {
@@ -69,11 +66,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        order.setId(resultSet.getLong("order_id"));
-                        order.setUserId(resultSet.getLong("user_id"));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    order.setId(resultSet.getLong("order_id"));
+                    order.setUserId(resultSet.getLong("user_id"));
                 }
             }
         } catch (SQLException e) {
@@ -91,10 +87,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        orderList.add(getOrderFromResultSet(resultSet));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    orderList.add(getOrderFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {
@@ -162,10 +157,9 @@ public class OrderDaoJdbcImpl implements OrderDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, order.getId());
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        productList.add(getProductFromResultSet(resultSet));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    productList.add(getProductFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {

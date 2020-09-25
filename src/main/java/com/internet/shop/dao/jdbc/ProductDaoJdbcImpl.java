@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Dao
 public class ProductDaoJdbcImpl implements ProductDao {
-
     @Override
     public Product create(Product product) {
         String query = "INSERT INTO products (product_name, product_price) VALUES (?, ?)";
@@ -27,10 +26,9 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 preparedStatement.setString(1, product.getName());
                 preparedStatement.setBigDecimal(2, product.getPrice());
                 preparedStatement.executeUpdate();
-                try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
-                    if (resultSet.next()) {
-                        product.setId(resultSet.getLong(1));
-                    }
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    product.setId(resultSet.getLong(1));
                 }
             }
             return product;
@@ -45,10 +43,9 @@ public class ProductDaoJdbcImpl implements ProductDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        return Optional.of(getProductFromResultSet(resultSet));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return Optional.of(getProductFromResultSet(resultSet));
                 }
             }
             return Optional.empty();
@@ -63,10 +60,9 @@ public class ProductDaoJdbcImpl implements ProductDao {
         List<Product> products = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        products.add(getProductFromResultSet(resultSet));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    products.add(getProductFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {

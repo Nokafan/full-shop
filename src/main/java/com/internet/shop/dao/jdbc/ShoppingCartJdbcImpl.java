@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Dao
 public class ShoppingCartJdbcImpl implements ShoppingCartDao {
-
     @Override
     public ShoppingCart getByUserId(Long userId) {
         String query = "SELECT * FROM shopping_carts WHERE user_id = ? AND cart_deleted = FALSE;";
@@ -26,12 +25,11 @@ public class ShoppingCartJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, userId);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        shoppingCart.setUserId(userId);
-                        long cartId = resultSet.getLong("cart_id");
-                        shoppingCart.setId(cartId);
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    shoppingCart.setUserId(userId);
+                    long cartId = resultSet.getLong("cart_id");
+                    shoppingCart.setId(cartId);
                 }
             }
         } catch (SQLException e) {
@@ -49,11 +47,11 @@ public class ShoppingCartJdbcImpl implements ShoppingCartDao {
                          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setLong(1, cart.getUserId());
                 preparedStatement.executeUpdate();
-                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        cart.setId(generatedKeys.getLong(1));
-                    }
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    cart.setId(generatedKeys.getLong(1));
                 }
+
             }
         } catch (SQLException e) {
             throw new DataProcessingException("ShoppingCart for userId=" + cart.getUserId()
@@ -69,10 +67,9 @@ public class ShoppingCartJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        shoppingCart.setId(resultSet.getLong("cart_id"));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    shoppingCart.setId(resultSet.getLong("cart_id"));
                 }
             }
         } catch (SQLException e) {
@@ -90,12 +87,11 @@ public class ShoppingCartJdbcImpl implements ShoppingCartDao {
         List<ShoppingCart> shoppingCarts = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        long cartId = resultSet.getLong("cart_id");
-                        long userId = resultSet.getLong("user_id");
-                        shoppingCarts.add(new ShoppingCart(cartId, userId));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    long cartId = resultSet.getLong("cart_id");
+                    long userId = resultSet.getLong("user_id");
+                    shoppingCarts.add(new ShoppingCart(cartId, userId));
                 }
             }
         } catch (SQLException e) {
@@ -149,13 +145,12 @@ public class ShoppingCartJdbcImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, cartId);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        long id = resultSet.getLong("product_id");
-                        String name = resultSet.getString("product_name");
-                        BigDecimal price = resultSet.getBigDecimal("product_price");
-                        products.add(new Product(id, name, price));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    long id = resultSet.getLong("product_id");
+                    String name = resultSet.getString("product_name");
+                    BigDecimal price = resultSet.getBigDecimal("product_price");
+                    products.add(new Product(id, name, price));
                 }
             }
         } catch (SQLException e) {

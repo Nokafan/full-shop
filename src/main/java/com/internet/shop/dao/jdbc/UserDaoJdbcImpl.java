@@ -19,7 +19,6 @@ import java.util.Set;
 
 @Dao
 public class UserDaoJdbcImpl implements UserDao {
-
     @Override
     public Optional<User> findByLogin(String login) {
         String query = "SELECT * FROM users WHERE login = ? AND user_deleted = FALSE; ";
@@ -27,10 +26,9 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, login);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        tempUser = getUserFomResultSet(resultSet);
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    tempUser = getUserFomResultSet(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -50,10 +48,9 @@ public class UserDaoJdbcImpl implements UserDao {
                 preparedStatement.setString(2, user.getLogin());
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.executeUpdate();
-                try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        user.setId(generatedKeys.getLong(1));
-                    }
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getLong(1));
                 }
             }
         } catch (SQLException e) {
@@ -72,10 +69,9 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        tempUser = getUserFomResultSet(resultSet);
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    tempUser = getUserFomResultSet(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -92,10 +88,9 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement preparedStatement =
                         connection.prepareStatement(query)) {
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    users.add(getUserFomResultSet(resultSet));
-                }
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                users.add(getUserFomResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get all users.", e);
@@ -108,13 +103,13 @@ public class UserDaoJdbcImpl implements UserDao {
         String query = "UPDATE users  "
                 + "SET user_name = ?, login = ?, user_password = ? "
                 + "WHERE user_id = ? AND user_deleted = FALSE;";
-        try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ) {
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLogin());
-            preparedStatement.setString(3, user.getPassword());
-            preparedStatement.executeUpdate();
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getLogin());
+                preparedStatement.setString(3, user.getPassword());
+                preparedStatement.executeUpdate();
+            }
             return insertRoles(user);
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't update user id=" + user.getId(), e);
@@ -154,12 +149,11 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, userId);
-                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                    while (resultSet.next()) {
-                        long roleId = resultSet.getLong("role_id");
-                        String roleName = resultSet.getString("role_name");
-                        roles.add(new Role(roleId, Role.RoleName.valueOf(roleName)));
-                    }
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    long roleId = resultSet.getLong("role_id");
+                    String roleName = resultSet.getString("role_name");
+                    roles.add(new Role(roleId, Role.RoleName.valueOf(roleName)));
                 }
             }
         } catch (SQLException e) {
