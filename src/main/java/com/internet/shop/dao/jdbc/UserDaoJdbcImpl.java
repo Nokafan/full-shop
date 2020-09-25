@@ -36,7 +36,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get user with login=" + login, e);
         }
-        tempUser.setRoles(requestUserRoles(tempUser.getId()));
+        tempUser.setRoles(requestRoles(tempUser.getId()));
         return Optional.of(tempUser);
     }
 
@@ -59,7 +59,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't create user", e);
         }
-        injectRolesToDB(user);
+        insertRoles(user);
         return user;
     }
 
@@ -81,7 +81,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get user id=" + id, e);
         }
-        tempUser.setRoles(requestUserRoles(id));
+        tempUser.setRoles(requestRoles(id));
         return Optional.of(tempUser);
     }
 
@@ -115,7 +115,7 @@ public class UserDaoJdbcImpl implements UserDao {
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
-            return injectRolesToDB(user);
+            return insertRoles(user);
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't update user id=" + user.getId(), e);
         }
@@ -123,7 +123,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        clearUserRolesFromDB(id);
+        deleteRoles(id);
         String query = "UPDATE users "
                 + "SET user_deleted = TRUE "
                 + "WHERE user_id = ?;";
@@ -145,7 +145,7 @@ public class UserDaoJdbcImpl implements UserDao {
         return new User(id, name, login, password);
     }
 
-    private Set<Role> requestUserRoles(long userId) {
+    private Set<Role> requestRoles(long userId) {
         String query = "SELECT user_id, roles.role_id, roles.role_name "
                 + "FROM user_roles "
                 + "INNER JOIN roles ON user_roles.role_id = roles.role_id "
@@ -168,8 +168,8 @@ public class UserDaoJdbcImpl implements UserDao {
         return roles;
     }
 
-    private User injectRolesToDB(User user) {
-        clearUserRolesFromDB(user.getId());
+    private User insertRoles(User user) {
+        deleteRoles(user.getId());
         String query = "INSERT INTO user_roles (user_id, role_id) "
                 + "VALUES (?, (SELECT role_id "
                 + "FROM roles "
@@ -185,11 +185,11 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't inject roles to DB.", e);
         }
-        user.setRoles(requestUserRoles(user.getId()));
+        user.setRoles(requestRoles(user.getId()));
         return user;
     }
 
-    private int clearUserRolesFromDB(long userId) {
+    private int deleteRoles(long userId) {
         String query = "DELETE FROM user_roles WHERE user_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {

@@ -20,15 +20,16 @@
 <a href="${pageContext.request.contextPath}/carts/cart">User cart</a>
 <br><br>
 <hr>
+<h1>Admin section</h1>
 <a href="${pageContext.request.contextPath}/users/all">All users</a>
 <br><br>
 <a href="${pageContext.request.contextPath}/products/add">Add new products</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/products/edit">Products edit section</a>
+<a href="${pageContext.request.contextPath}/products/edit">All products edit section</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/carts/edit">Carts edit section</a>
+<a href="${pageContext.request.contextPath}/carts/edit">All carts edit section</a>
 <br><br>
-<a href="${pageContext.request.contextPath}/orders/edit">Orders edit section</a>
+<a href="${pageContext.request.contextPath}/orders/edit">All orders edit section</a>
 <br><br>
 </body>
 </html>

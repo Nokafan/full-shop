@@ -47,7 +47,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                 preparedStatement.setLong(1, id);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
-                        return Optional.of(getProduct(resultSet));
+                        return Optional.of(getProductFromResultSet(resultSet));
                     }
                 }
             }
@@ -65,7 +65,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        products.add(getProduct(resultSet));
+                        products.add(getProductFromResultSet(resultSet));
                     }
                 }
             }
@@ -106,7 +106,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
         }
     }
 
-    private Product getProduct(ResultSet resultSet) throws SQLException {
+    private Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("product_id");
         String name = resultSet.getString("product_name");
         BigDecimal price = resultSet.getBigDecimal("product_price");

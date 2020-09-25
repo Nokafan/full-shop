@@ -36,7 +36,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             throw new DataProcessingException("Culdn't get user order. User id =" + id, e);
         }
         for (Order order : ordersList) {
-            order.setProducts(setProductsToOrderFromDB(order));
+            order.setProducts(insertProductsToOrder(order));
         }
         return ordersList;
     }
@@ -58,7 +58,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't create order id=" + order.getId(), e);
         }
-        setProductsToOrderInDB(order);
+        insertProductsToDB(order);
         return order;
     }
 
@@ -79,7 +79,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get order id=" + id, e);
         }
-        order.setProducts(setProductsToOrderFromDB(order));
+        order.setProducts(insertProductsToOrder(order));
         return Optional.of(order);
     }
 
@@ -101,7 +101,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             throw new DataProcessingException("Couldn't get all orders from db", e);
         }
         for (Order order : orderList) {
-            order.setProducts(setProductsToOrderFromDB(order));
+            order.setProducts(insertProductsToOrder(order));
         }
         return orderList;
     }
@@ -109,7 +109,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public Order update(Order order) {
         deleteProductsFromOrder(order.getId());
-        setProductsToOrderInDB(order);
+        insertProductsToDB(order);
         String query = "UPDATE orders "
                 + "SET user_id = ? "
                 + "WHERE order_id = ? AND order_deleted = FALSE;";
@@ -154,7 +154,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
-    private List<Product> setProductsToOrderFromDB(Order order) {
+    private List<Product> insertProductsToOrder(Order order) {
         String query = "SELECT * FROM products p "
                 + "INNER JOIN order_products op ON p.product_id = op.product_id "
                 + "WHERE order_id = ? AND product_deleted = FALSE;";
@@ -164,7 +164,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 preparedStatement.setLong(1, order.getId());
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        productList.add(getProduct(resultSet));
+                        productList.add(getProductFromResultSet(resultSet));
                     }
                 }
             }
@@ -174,7 +174,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         return productList;
     }
 
-    private int setProductsToOrderInDB(Order order) {
+    private int insertProductsToDB(Order order) {
         String query = "INSERT INTO order_products (order_id, product_id) VALUES (?, ?);";
         long orderId = order.getId();
         int updatedProductsCount = 0;
@@ -199,7 +199,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     }
 
-    private Product getProduct(ResultSet resultSet) throws SQLException {
+    private Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong("product_id");
         String name = resultSet.getString("product_name");
         BigDecimal price = resultSet.getBigDecimal("product_price");
