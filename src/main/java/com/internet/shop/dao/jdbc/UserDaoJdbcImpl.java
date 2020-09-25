@@ -56,8 +56,7 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't create user", e);
         }
-        insertRoles(user);
-        return user;
+        return insertRoles(user);
     }
 
     @Override
@@ -110,22 +109,21 @@ public class UserDaoJdbcImpl implements UserDao {
                 preparedStatement.setString(3, user.getPassword());
                 preparedStatement.executeUpdate();
             }
-            return insertRoles(user);
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't update user id=" + user.getId(), e);
         }
+        return insertRoles(user);
     }
 
     @Override
     public boolean delete(Long id) {
-        deleteRoles(id);
         String query = "UPDATE users "
                 + "SET user_deleted = TRUE "
                 + "WHERE user_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                return preparedStatement.execute();
+                return preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't delete user id=" + id, e);
@@ -143,7 +141,7 @@ public class UserDaoJdbcImpl implements UserDao {
     private Set<Role> requestRoles(long userId) {
         String query = "SELECT user_id, roles.role_id, roles.role_name "
                 + "FROM user_roles "
-                + "INNER JOIN roles ON user_roles.role_id = roles.role_id "
+                + "INNER JOIN roles USING (role_id)"
                 + "WHERE user_roles.user_id = ? AND roles.role_deleted = FALSE;";
         Set<Role> roles = new HashSet<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -165,8 +163,7 @@ public class UserDaoJdbcImpl implements UserDao {
     private User insertRoles(User user) {
         deleteRoles(user.getId());
         String query = "INSERT INTO user_roles (user_id, role_id) "
-                + "VALUES (?, (SELECT role_id "
-                + "FROM roles "
+                + "VALUES (?, (SELECT role_id FROM roles "
                 + "WHERE role_name = ? AND role_deleted = FALSE));";
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Role role : user.getRoles()) {

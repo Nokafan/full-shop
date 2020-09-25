@@ -95,7 +95,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setLong(1, id);
-                return preparedStatement.executeUpdate() == 1;
+                return preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't delete product with id = " + id, e);
@@ -103,7 +103,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     private Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong("product_id");
+        Long id = resultSet.getLong("product_id");
         String name = resultSet.getString("product_name");
         BigDecimal price = resultSet.getBigDecimal("product_price");
         return new Product(id, name, price);

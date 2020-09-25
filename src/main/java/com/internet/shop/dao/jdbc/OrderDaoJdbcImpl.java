@@ -81,9 +81,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        String query = "SELECT order_id, user_id "
-                + "FROM internet_shop.orders "
-                + "WHERE order_deleted = FALSE;";
+        String query = "SELECT order_id, user_id FROM orders WHERE order_deleted = FALSE;";
         List<Order> orderList = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -125,11 +123,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
         String deleteOrder = "UPDATE orders "
                 + "SET order_deleted = TRUE "
                 + "WHERE order_id = ?";
-        deleteProductsFromOrder(id);
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteOrder)) {
                 preparedStatement.setLong(1, id);
-                return preparedStatement.execute();
+                return preparedStatement.executeUpdate() > 0;
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't delete order id=" + id, e);
@@ -151,8 +148,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     private List<Product> insertProductsToOrder(Order order) {
         String query = "SELECT * FROM products p "
-                + "INNER JOIN order_products op ON p.product_id = op.product_id "
-                + "WHERE order_id = ? AND product_deleted = FALSE;";
+                + "INNER JOIN order_products op USING (product_id) "
+                + "WHERE op.order_id = ? AND p.product_deleted = FALSE;";
         List<Product> productList = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -187,14 +184,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
     }
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
-        long orderId = resultSet.getLong("order_id");
-        long userId = resultSet.getLong("user_id");
+        Long orderId = resultSet.getLong("order_id");
+        Long userId = resultSet.getLong("user_id");
         return new Order(orderId, userId);
 
     }
 
     private Product getProductFromResultSet(ResultSet resultSet) throws SQLException {
-        long id = resultSet.getLong("product_id");
+        Long id = resultSet.getLong("product_id");
         String name = resultSet.getString("product_name");
         BigDecimal price = resultSet.getBigDecimal("product_price");
         return new Product(id, name, price);
