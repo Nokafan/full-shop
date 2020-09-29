@@ -1,14 +1,12 @@
 package com.internet.shop.dao.jdbc;
 
-import static com.internet.shop.util.HashUtil.getSalt;
-import static com.internet.shop.util.HashUtil.hashPassword;
-
 import com.internet.shop.dao.interfaces.UserDao;
 import com.internet.shop.exceptions.DataProcessingException;
 import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.util.ConnectionUtil;
+import com.internet.shop.util.HashUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,8 +25,8 @@ public class UserDaoJdbcImpl implements UserDao {
     public User create(User user) {
         String query = "INSERT INTO users ("
                 + "user_name, login, user_password, salt) VALUES (?, ?, ?, ?);";
-        byte[] salt = getSalt();
-        String saltedPassword = hashPassword(user.getPassword(), salt);
+        byte[] salt = HashUtil.getSalt();
+        String saltedPassword = HashUtil.hashPassword(user.getPassword(), salt);
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement =
                          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
