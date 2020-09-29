@@ -1,5 +1,8 @@
 package com.internet.shop.dao.jdbc;
 
+import static com.internet.shop.util.HashUtil.getSalt;
+import static com.internet.shop.util.HashUtil.hashPassword;
+
 import com.internet.shop.dao.interfaces.UserDao;
 import com.internet.shop.exceptions.DataProcessingException;
 import com.internet.shop.lib.Dao;
@@ -19,6 +22,32 @@ import java.util.Set;
 
 @Dao
 public class UserDaoJdbcImpl implements UserDao {
+
+    @Override
+    public User create(User user) {
+        String query = "INSERT INTO users ("
+                + "user_name, login, user_password, salt) VALUES (?, ?, ?, ?);";
+        byte[] salt = getSalt();
+        String saltedPassword = hashPassword(user.getPassword(), salt);
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement preparedStatement =
+                         connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getLogin());
+                preparedStatement.setString(3, saltedPassword);
+                preparedStatement.setBytes(4, salt);
+                preparedStatement.executeUpdate();
+                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getLong(1));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Couldn't create user", e);
+        }
+        return insertRoles(user);
+    }
+
     @Override
     public Optional<User> findByLogin(String login) {
         String query = "SELECT * FROM users WHERE login = ? AND user_deleted = FALSE; ";
@@ -39,30 +68,8 @@ public class UserDaoJdbcImpl implements UserDao {
     }
 
     @Override
-    public User create(User user) {
-        String query = "INSERT INTO users (user_name, login, user_password) VALUES (?, ?, ?);";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            try (PreparedStatement preparedStatement =
-                         connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                preparedStatement.setString(1, user.getName());
-                preparedStatement.setString(2, user.getLogin());
-                preparedStatement.setString(3, user.getPassword());
-                preparedStatement.executeUpdate();
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    user.setId(generatedKeys.getLong(1));
-                }
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Couldn't create user", e);
-        }
-        return insertRoles(user);
-    }
-
-    @Override
     public Optional<User> get(Long id) {
-        String query = "SELECT user_id, user_name, login, user_password "
-                + "FROM users "
+        String query = "SELECT * FROM users "
                 + "WHERE user_id = ? AND user_deleted = FALSE;";
         User tempUser = new User();
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -135,7 +142,8 @@ public class UserDaoJdbcImpl implements UserDao {
         String name = resultSet.getString("user_name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("user_password");
-        return new User(id, name, login, password);
+        byte[] salt = resultSet.getBytes("salt");
+        return new User(id, name, login, password, salt);
     }
 
     private Set<Role> requestRoles(long userId) {

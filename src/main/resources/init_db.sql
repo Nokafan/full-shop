@@ -24,6 +24,7 @@ CREATE TABLE `users` (
                          `user_name` varchar(225) NOT NULL,
                          `login` varchar(225) NOT NULL,
                          `user_password` varchar(225) NOT NULL,
+                         `salt` varchar(255) DEFAULT NOT NULL,
                          `user_deleted` tinyint(1) NOT NULL DEFAULT '0',
                          PRIMARY KEY (`user_id`),
                          UNIQUE KEY `login_UNIQUE` (`login`)

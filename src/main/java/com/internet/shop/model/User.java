@@ -8,6 +8,7 @@ public class User {
     private String name;
     private String login;
     private String password;
+    private byte[] salt;
     private Set<Role> roles;
 
     public User() {
@@ -24,6 +25,14 @@ public class User {
         this.name = name;
         this.login = login;
         this.password = password;
+    }
+
+    public User(Long id, String name, String login, String password, byte[] salt) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.salt = salt;
     }
 
     public Long getId() {
@@ -64,6 +73,14 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
     }
 
     @Override
