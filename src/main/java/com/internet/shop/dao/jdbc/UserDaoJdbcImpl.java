@@ -6,7 +6,6 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.util.ConnectionUtil;
-import com.internet.shop.util.HashUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,15 +24,13 @@ public class UserDaoJdbcImpl implements UserDao {
     public User create(User user) {
         String query = "INSERT INTO users ("
                 + "user_name, login, user_password, salt) VALUES (?, ?, ?, ?);";
-        byte[] salt = HashUtil.getSalt();
-        String saltedPassword = HashUtil.hashPassword(user.getPassword(), salt);
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement =
                          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getLogin());
-                preparedStatement.setString(3, saltedPassword);
-                preparedStatement.setBytes(4, salt);
+                preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setBytes(4, user.getSalt());
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -89,12 +86,12 @@ public class UserDaoJdbcImpl implements UserDao {
     public List<User> getAll() {
         String query = "SELECT * FROM users WHERE user_deleted = FALSE;";
         List<User> users = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement preparedStatement =
-                        connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                users.add(getUserFomResultSet(resultSet));
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    users.add(getUserFomResultSet(resultSet));
+                }
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get all users.", e);
