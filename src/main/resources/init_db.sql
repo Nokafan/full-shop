@@ -1,5 +1,3 @@
-
-
 DROP TABLE IF EXISTS `order_products`;
 
 CREATE TABLE `order_products` (
