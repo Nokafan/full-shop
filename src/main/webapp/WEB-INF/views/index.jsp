@@ -7,6 +7,8 @@
 <h1>Main page</h1>
 <br>
 <h2 style="color: blue">${message}</h2>
+<a href="${pageContext.request.contextPath}/inject"><button>Inject</button></a>
+<br><br>
 <a href="${pageContext.request.contextPath}/login"><button>Login</button></a>
 <br><br>
 <a href="${pageContext.request.contextPath}/logout"><button>Logout</button></a>

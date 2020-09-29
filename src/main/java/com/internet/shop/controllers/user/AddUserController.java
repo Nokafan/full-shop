@@ -34,6 +34,10 @@ public class AddUserController extends HttpServlet {
         String password = req.getParameter("pwd");
         String passwordRepeated = req.getParameter("pwd-repeat");
 
+        if (userService.findByLogin(login).get().getLogin() != null) {
+            req.setAttribute("message", "Your login are taken");
+            req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
+        }
         if (password.equals(passwordRepeated)) {
             User user = new User(name, login, password);
             user.setRoles(Set.of(Role.of("USER")));
