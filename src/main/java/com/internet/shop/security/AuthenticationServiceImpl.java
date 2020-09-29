@@ -18,7 +18,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Optional<User> optionalUser = userService.findByLogin(login);
         byte[] salt = optionalUser.get().getSalt();
         String saltedPassword = HashUtil.hashPassword(password, salt);
-        if (optionalUser.isPresent() && optionalUser.get().getPassword().equals(saltedPassword)) {
+        if (optionalUser.get().getPassword().equals(saltedPassword)) {
             return optionalUser.get();
         }
         throw new AuthenticationException("Incorrect username or password");

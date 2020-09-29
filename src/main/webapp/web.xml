@@ -246,9 +246,8 @@
     </servlet-mapping>
 
     <error-page>
-        <!-- Uncaught exception -->
         <error-code>500</error-code>
-        <location>/error.jsp</location>
+        <location>/WEB-INF/views/error.jsp</location>
     </error-page>
 
     <filter>

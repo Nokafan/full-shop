@@ -102,13 +102,14 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User update(User user) {
         String query = "UPDATE users  "
-                + "SET user_name = ?, login = ?, user_password = ? "
+                + "SET user_name = ?, login = ?, user_password = ?, salt = ?"
                 + "WHERE user_id = ? AND user_deleted = FALSE;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getLogin());
                 preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setBytes(4, user.getSalt());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
