@@ -34,7 +34,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             throw new DataProcessingException("Culdn't get user order. User id =" + id, e);
         }
         for (Order order : ordersList) {
-            order.setProducts(insertProductsToOrder(order));
+            order.setProducts(getOrderProducts(order));
         }
         return ordersList;
     }
@@ -75,7 +75,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get order id=" + id, e);
         }
-        order.setProducts(insertProductsToOrder(order));
+        order.setProducts(getOrderProducts(order));
         return Optional.of(order);
     }
 
@@ -94,7 +94,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             throw new DataProcessingException("Couldn't get all orders from db", e);
         }
         for (Order order : orderList) {
-            order.setProducts(insertProductsToOrder(order));
+            order.setProducts(getOrderProducts(order));
         }
         return orderList;
     }
@@ -146,7 +146,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
-    private List<Product> insertProductsToOrder(Order order) {
+    private List<Product> getOrderProducts(Order order) {
         String query = "SELECT * FROM products p "
                 + "INNER JOIN order_products op USING (product_id) "
                 + "WHERE op.order_id = ? AND p.product_deleted = FALSE;";
@@ -160,7 +160,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 }
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Cuoldn't set products to order from DB ", e);
+            throw new DataProcessingException("Cuoldn't set products to order from DB, "
+                    + "where order id=" + order.getId(), e);
         }
         return productList;
     }
