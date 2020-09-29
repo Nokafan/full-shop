@@ -2,13 +2,11 @@ package com.internet.shop.dao.impl;
 
 import com.internet.shop.dao.interfaces.UserDao;
 import com.internet.shop.db.Storage;
-import com.internet.shop.lib.Dao;
 import com.internet.shop.model.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-@Dao
 public class UserDaoListImp implements UserDao {
 
     @Override
@@ -33,7 +31,7 @@ public class UserDaoListImp implements UserDao {
     public User update(User user) {
         IntStream.range(0, Storage.users.size())
                 .filter(i -> Storage.users.get(i).getId().equals(user.getId()))
-                .forEach(i -> Storage.users.set(i,user));
+                .forEach(i -> Storage.users.set(i, user));
         return user;
     }
 
