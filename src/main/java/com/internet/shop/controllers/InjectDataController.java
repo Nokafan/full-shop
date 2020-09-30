@@ -5,7 +5,6 @@ import com.internet.shop.model.Product;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.service.interfaces.ProductService;
-import com.internet.shop.service.interfaces.ShoppingCartService;
 import com.internet.shop.service.interfaces.UserService;
 import java.io.IOException;
 import java.util.Set;
@@ -22,8 +21,6 @@ public class InjectDataController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private UserService userService =
             (UserService) injector.getInstance(UserService.class);
-    private ShoppingCartService cartService =
-            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
     private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
 

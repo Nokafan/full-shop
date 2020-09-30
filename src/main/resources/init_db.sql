@@ -1,4 +1,39 @@
-DROP TABLE IF EXISTS `order_products`;
+CREATE DATABASE `internet_shop`;
+
+CREATE TABLE `roles` (
+                         `role_id` bigint NOT NULL AUTO_INCREMENT,
+                         `role_name` varchar(11) NOT NULL DEFAULT 'USER',
+                         `role_deleted` tinyint NOT NULL DEFAULT '0',
+                         PRIMARY KEY (`role_id`)
+);
+
+CREATE TABLE `products` (
+                            `product_id` bigint NOT NULL AUTO_INCREMENT,
+                            `product_name` varchar(255) NOT NULL,
+                            `product_price` decimal(13,2) NOT NULL,
+                            `product_deleted` tinyint(1) NOT NULL DEFAULT '0',
+                            PRIMARY KEY (`product_id`)
+);
+
+CREATE TABLE `users` (
+                         `user_id` bigint NOT NULL AUTO_INCREMENT,
+                         `user_name` varchar(225) NOT NULL,
+                         `login` varchar(225) NOT NULL,
+                         `user_password` varchar(225) NOT NULL,
+                         `salt` varbinary(225) NOT NULL,
+                         `user_deleted` tinyint(1) NOT NULL DEFAULT '0',
+                         PRIMARY KEY (`user_id`),
+                         UNIQUE KEY `login_UNIQUE` (`login`)
+);
+
+CREATE TABLE `orders` (
+                          `order_id` bigint NOT NULL AUTO_INCREMENT,
+                          `user_id` bigint NOT NULL,
+                          `order_deleted` tinyint NOT NULL DEFAULT '0',
+                          PRIMARY KEY (`order_id`),
+                          KEY `orders_users_fk_idx` (`user_id`),
+                          CONSTRAINT `orders_users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
+);
 
 CREATE TABLE `order_products` (
                                   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -11,42 +46,6 @@ CREATE TABLE `order_products` (
                                   CONSTRAINT `orders_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 );
 
-
-DROP TABLE IF EXISTS `orders`;
-
-CREATE TABLE `orders` (
-                          `order_id` bigint NOT NULL AUTO_INCREMENT,
-                          `user_id` bigint NOT NULL,
-                          `order_deleted` tinyint NOT NULL DEFAULT '0',
-                          PRIMARY KEY (`order_id`),
-                          KEY `orders_users_fk_idx` (`user_id`),
-                          CONSTRAINT `orders_users_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-);
-
-
-DROP TABLE IF EXISTS `products`;
-
-CREATE TABLE `products` (
-                            `product_id` bigint NOT NULL AUTO_INCREMENT,
-                            `product_name` varchar(255) NOT NULL,
-                            `product_price` decimal(13,2) NOT NULL,
-                            `product_deleted` tinyint(1) NOT NULL DEFAULT '0',
-                            PRIMARY KEY (`product_id`)
-);
-
-
-DROP TABLE IF EXISTS `roles`;
-
-CREATE TABLE `roles` (
-                         `role_id` bigint NOT NULL AUTO_INCREMENT,
-                         `role_name` varchar(11) NOT NULL DEFAULT 'USER',
-                         `role_deleted` tinyint NOT NULL DEFAULT '0',
-                         PRIMARY KEY (`role_id`)
-);
-
-
-DROP TABLE IF EXISTS `shopping_carts`;
-
 CREATE TABLE `shopping_carts` (
                                   `cart_id` bigint NOT NULL AUTO_INCREMENT,
                                   `user_id` bigint NOT NULL,
@@ -56,9 +55,6 @@ CREATE TABLE `shopping_carts` (
                                   KEY `cart_user_id_fk_idx` (`user_id`),
                                   CONSTRAINT `cart_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 );
-
-
-DROP TABLE IF EXISTS `shopping_carts_products`;
 
 CREATE TABLE `shopping_carts_products` (
                                            `id` int NOT NULL AUTO_INCREMENT,
@@ -71,8 +67,6 @@ CREATE TABLE `shopping_carts_products` (
                                            CONSTRAINT `cart_product_id_fk` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
 );
 
-DROP TABLE IF EXISTS `user_roles`;
-
 CREATE TABLE `user_roles` (
                               `user_id` bigint NOT NULL,
                               `role_id` bigint NOT NULL,
@@ -80,19 +74,6 @@ CREATE TABLE `user_roles` (
                               KEY `roles_role_id_fk_idx` (`role_id`),
                               CONSTRAINT `roles_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
                               CONSTRAINT `roles_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
-);
-
-DROP TABLE IF EXISTS `users`;
-
-CREATE TABLE `users` (
-                         `user_id` bigint NOT NULL AUTO_INCREMENT,
-                         `user_name` varchar(225) NOT NULL,
-                         `login` varchar(225) NOT NULL,
-                         `user_password` varchar(225) NOT NULL,
-                         `salt` varbinary(225) NOT NULL,
-                         `user_deleted` tinyint(1) NOT NULL DEFAULT '0',
-                         PRIMARY KEY (`user_id`),
-                         UNIQUE KEY `login_UNIQUE` (`login`)
 );
 
 INSERT INTO `internet_shop`.`roles` (`role_name`) VALUES ('ADMIN');
