@@ -5,7 +5,6 @@ import com.internet.shop.model.Product;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.service.interfaces.ProductService;
-import com.internet.shop.service.interfaces.ShoppingCartService;
 import com.internet.shop.service.interfaces.UserService;
 import java.io.IOException;
 import java.util.Set;
@@ -15,15 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
-    public static final User USER_1 = new User("a", "123","123");
+    public static final User USER_1 = new User("a", "1","1");
     public static final Product PRODUCT_1 = new Product("Biscuite-1", 101);
     public static final Product PRODUCT_2 = new Product("Biscuite-2", 102);
     public static final Product PRODUCT_3 = new Product("Biscuite-3", 103);
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private UserService userService =
             (UserService) injector.getInstance(UserService.class);
-    private ShoppingCartService cartService =
-            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
     private ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
 

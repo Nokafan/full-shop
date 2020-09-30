@@ -19,34 +19,18 @@ import java.util.Set;
 
 @Dao
 public class UserDaoJdbcImpl implements UserDao {
-    @Override
-    public Optional<User> findByLogin(String login) {
-        String query = "SELECT * FROM users WHERE login = ? AND user_deleted = FALSE; ";
-        User tempUser = new User();
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, login);
-                ResultSet resultSet = preparedStatement.executeQuery();
-                if (resultSet.next()) {
-                    tempUser = getUserFomResultSet(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Couldn't get user with login=" + login, e);
-        }
-        tempUser.setRoles(requestRoles(tempUser.getId()));
-        return Optional.of(tempUser);
-    }
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (user_name, login, user_password) VALUES (?, ?, ?);";
+        String query = "INSERT INTO users ("
+                + "user_name, login, user_password, salt) VALUES (?, ?, ?, ?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement =
                          connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getLogin());
                 preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setBytes(4, user.getSalt());
                 preparedStatement.executeUpdate();
                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -60,9 +44,29 @@ public class UserDaoJdbcImpl implements UserDao {
     }
 
     @Override
+    public Optional<User> findByLogin(String login) {
+        String query = "SELECT * FROM users WHERE login = ? AND user_deleted = FALSE; ";
+        User tempUser = null;
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, login);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    tempUser = getUserFomResultSet(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Couldn't get user with login=" + login, e);
+        }
+        if (tempUser != null) {
+            tempUser.setRoles(requestRoles(tempUser.getId()));
+        }
+        return Optional.ofNullable(tempUser);
+    }
+
+    @Override
     public Optional<User> get(Long id) {
-        String query = "SELECT user_id, user_name, login, user_password "
-                + "FROM users "
+        String query = "SELECT * FROM users "
                 + "WHERE user_id = ? AND user_deleted = FALSE;";
         User tempUser = new User();
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -84,12 +88,12 @@ public class UserDaoJdbcImpl implements UserDao {
     public List<User> getAll() {
         String query = "SELECT * FROM users WHERE user_deleted = FALSE;";
         List<User> users = new ArrayList<>();
-        try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement preparedStatement =
-                        connection.prepareStatement(query)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                users.add(getUserFomResultSet(resultSet));
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    users.add(getUserFomResultSet(resultSet));
+                }
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get all users.", e);
@@ -100,13 +104,15 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User update(User user) {
         String query = "UPDATE users  "
-                + "SET user_name = ?, login = ?, user_password = ? "
+                + "SET user_name = ?, login = ?, user_password = ?, salt = ?"
                 + "WHERE user_id = ? AND user_deleted = FALSE;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, user.getName());
                 preparedStatement.setString(2, user.getLogin());
                 preparedStatement.setString(3, user.getPassword());
+                preparedStatement.setBytes(4, user.getSalt());
+                preparedStatement.setLong(5, user.getId());
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -135,7 +141,8 @@ public class UserDaoJdbcImpl implements UserDao {
         String name = resultSet.getString("user_name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("user_password");
-        return new User(id, name, login, password);
+        byte[] salt = resultSet.getBytes("salt");
+        return new User(id, name, login, password, salt);
     }
 
     private Set<Role> requestRoles(long userId) {

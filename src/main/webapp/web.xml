@@ -245,6 +245,11 @@
         <url-pattern>/admin/cart/detail</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error.jsp</location>
+    </error-page>
+
     <filter>
         <filter-name>authenticationFilter</filter-name>
         <filter-class>com.internet.shop.web.filters.AuthenticationFilter</filter-class>
