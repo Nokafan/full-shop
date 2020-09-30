@@ -34,7 +34,7 @@ public class AddUserController extends HttpServlet {
         String password = req.getParameter("pwd");
         String passwordRepeated = req.getParameter("pwd-repeat");
 
-        if (userService.findByLogin(login).get().getLogin() != null) {
+        if (userService.findByLogin(login).isPresent()) {
             req.setAttribute("message", "This login already exists");
             req.getRequestDispatcher("/WEB-INF/views/users/registration.jsp").forward(req, resp);
             return;

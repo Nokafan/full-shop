@@ -6,6 +6,7 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.util.ConnectionUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> findByLogin(String login) {
         String query = "SELECT * FROM users WHERE login = ? AND user_deleted = FALSE; ";
-        User tempUser = new User();
+        User tempUser = null;
         try (Connection connection = ConnectionUtil.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, login);
@@ -58,7 +59,9 @@ public class UserDaoJdbcImpl implements UserDao {
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't get user with login=" + login, e);
         }
-        tempUser.setRoles(requestRoles(tempUser.getId()));
+        if (tempUser != null) {
+            tempUser.setRoles(requestRoles(tempUser.getId()));
+        }
         return Optional.of(tempUser);
     }
 
