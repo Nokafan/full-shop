@@ -6,7 +6,6 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Role;
 import com.internet.shop.model.User;
 import com.internet.shop.util.ConnectionUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,7 +61,7 @@ public class UserDaoJdbcImpl implements UserDao {
         if (tempUser != null) {
             tempUser.setRoles(requestRoles(tempUser.getId()));
         }
-        return Optional.of(tempUser);
+        return Optional.ofNullable(tempUser);
     }
 
     @Override
