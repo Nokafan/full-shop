@@ -4,7 +4,8 @@ CREATE TABLE `roles` (
                          `role_id` bigint NOT NULL AUTO_INCREMENT,
                          `role_name` varchar(11) NOT NULL DEFAULT 'USER',
                          `role_deleted` tinyint NOT NULL DEFAULT '0',
-                         PRIMARY KEY (`role_id`)
+                         PRIMARY KEY (`role_id`),
+                         UNIQUE KEY `role_name_UNIQUE` (`role_name`)
 );
 
 CREATE TABLE `products` (
@@ -68,8 +69,10 @@ CREATE TABLE `shopping_carts_products` (
 );
 
 CREATE TABLE `user_roles` (
+                              `id` bigint NOT NULL,
                               `user_id` bigint NOT NULL,
                               `role_id` bigint NOT NULL,
+                              PRIMARY KEY (`id`),
                               KEY `user_id_fk_idx` (`user_id`),
                               KEY `roles_role_id_fk_idx` (`role_id`),
                               CONSTRAINT `roles_role_id_fk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
