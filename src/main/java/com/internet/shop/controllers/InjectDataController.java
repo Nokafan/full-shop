@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
-    public static final User USER_1 = new User("a", "1","1");
+    public static final User USER_1 = new User("admin", "1","1");
     public static final Product PRODUCT_1 = new Product("Biscuite-1", 101);
     public static final Product PRODUCT_2 = new Product("Biscuite-2", 102);
     public static final Product PRODUCT_3 = new Product("Biscuite-3", 103);
