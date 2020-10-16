@@ -13,7 +13,9 @@ WebApp working under controllers and JSP.
 **Implementation details**
 
 Used storage - MySql 8 DB and Tomcat 9.0.37 as web-server.
+
 Webapp - servelts, controllers, filters, JSP.
+
 Access to DB established by JDBC API.
 
 **Configuration guide**
