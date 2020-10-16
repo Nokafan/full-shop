@@ -3,27 +3,21 @@
 This is a simple webshop project with plane operations for Users, such as buying products, adding them to, and removing them from the cart, confirming the orders. Admin can add more products to the shop, manage orders but can’t buy any products, also admin can remove any user as well as any product. Not registered and not logged in users can only observe the products at the shop, but can’t buy anything until they will do the registration.
 
 **Project structure**
-
-DAO layers have been made for JDBC and Storage as ArrayLists.
-
-Authorization and authentication covered at authorization service and filters.
-
-WebApp working under controllers and JSP.
+- DAO layers have been made for JDBC and Storage as ArrayLists.
+- Authorization and authentication covered at authorization service and filters.
+- WebApp working under controllers and JSP.
 
 **Implementation details**
-
-Used storage - MySql 8 DB and Tomcat 9.0.37 as web-server.
-
-Webapp - servelts, controllers, filters, JSP.
-
-Access to DB established by JDBC API.
+- Java 8 was used as base.
+- Used storage - MySql 8 DB and Tomcat 9.0.37 as web-server.
+- Webapp - servelts, controllers, filters, JSP.
+- Access to DB established by JDBC API.
+- OOP, SOLID, RBAC principles was used to develop this application.
 
 **Configuration guide**
-
-Tomcat:
+- Tomcat:
 Deployment — war_exploded, context address — "/"
-
-Connection: com\internet\shop\util\ConnectionUtil.java
+- Connection: com\internet\shop\util\ConnectionUtil.java
 
 Set user login, password, and port at URL as it configured at your DB (MySQL)
 Login as admin:
