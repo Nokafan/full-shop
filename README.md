@@ -8,7 +8,7 @@ This is a simple webshop project with plane operations for Users, such as buying
 - WebApp working under controllers and JSP.
 
 **Implementation details**
-- Java 8 was used as base.
+- JDK 11 was used as base.
 - Used storage - MySql 8 DB and Tomcat 9.0.37 as web-server.
 - Webapp - servelts, controllers, filters, JSP.
 - Access to DB established by JDBC API.
