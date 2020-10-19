@@ -3,7 +3,7 @@
 This is a simple webshop project with plane operations for Users, such as buying products, adding them to, and removing them from the cart, confirming the orders. Admin can add more products to the shop, manage orders but can’t buy any products, also admin can remove any user as well as any product. Not registered and not logged in users can only observe the products at the shop, but can’t buy anything until they will do the registration.
 
 **Project structure**
-- DAO layers have been made for JDBC and Storage as ArrayLists.
+- DAO layers have been made for JDBC.
 - Authorization and authentication covered at authorization service and filters.
 - WebApp working under controllers and JSP.
 
