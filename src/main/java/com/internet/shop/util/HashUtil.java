@@ -1,6 +1,6 @@
 package com.internet.shop.util;
 
-import exception.HashingCodeException;
+import com.internet.shop.exceptions.HashingCodeException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

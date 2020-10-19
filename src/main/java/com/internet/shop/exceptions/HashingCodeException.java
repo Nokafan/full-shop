@@ -1,4 +1,4 @@
-package exception;
+package com.internet.shop.exceptions;
 
 import java.security.NoSuchAlgorithmException;
 
