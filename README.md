@@ -18,6 +18,7 @@ This is a simple webshop project with plane operations for Users, such as buying
 - Tomcat:
 Deployment — war_exploded, context address — "/"
 - Connection: com\internet\shop\util\ConnectionUtil.java
+-Lombok plugin has to be installed.
 
 Set user login, password, and port at URL as it configured at your DB (MySQL)
 Login as admin:
