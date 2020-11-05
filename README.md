@@ -4,7 +4,7 @@ Project webshop with usual operations for Users, such as buying products, adding
 
 **Used technologies:**
 -	Java Core, Java 8
--	JDBS
+-	JDBС
 -	Maven
 -	Servlets
 -	MySql
